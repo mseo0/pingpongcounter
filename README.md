@@ -2,33 +2,27 @@
 
 ![App screenshot](images/1.png)
 
-A voice-activated scoreboard for two-sided competitions — debates, ping pong, sports, or anything else. Control scores hands-free with voice commands, or use the on-screen buttons.
+A voice-activated scoreboard for two-sided competitions — ping pong, debates, sports, or anything else. Control scores hands-free with voice commands, or use the on-screen buttons.
 
 ## Features
 
-- Voice commands to increment, decrement, and reset scores
+- Say a side name to increment its score instantly
+- Reset scores by voice
 - Manual +/- buttons as fallback
 - Customizable side names (used as voice targets)
-- Live feedback showing what was recognized
-- Works entirely in the browser — no backend
+- Scores saved across sessions
+- Fuzzy matching catches common speech recognition mishearings
+- Auto-restarts mic after silence — no need to click again mid-game
 
 ## Voice Commands
 
-Speak a keyword followed by a side reference (or just the side name to increment):
-
-| Action | Keywords |
+| Action | What to say |
 |---|---|
-| Increment | `add`, `plus`, `point`, `score`, `increment`, `up` |
-| Decrement | `minus`, `remove`, `subtract`, `decrement`, `down` |
-| Reset | `reset`, `clear`, `zero` |
+| Increment | Just say the side name — e.g. "Red" or "Blue" |
+| Reset one side | "reset Red" / "clear Blue" / "zero Red" |
+| Reset all | "reset all" / "clear both" |
 
-**Side references:** `left`, `right`, the default names (`Side 1`, `Side 2`), or any custom name you've set.
-
-Examples:
-- "add left" — increments left
-- "minus right" — decrements right
-- "reset left" — resets left to 0
-- "Side 1" — increments left (name-only shortcut)
+Side names are set by you — whatever you name each side becomes the voice trigger.
 
 ## Development
 

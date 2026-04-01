@@ -1,5 +1,5 @@
 import './styles.css';
-import { initialState } from './state';
+import { loadState, saveState } from './state';
 import { reduce } from './store';
 import { parseCommand } from './parser';
 import { renderScoreboard } from './scoreboard';
@@ -8,7 +8,7 @@ import { updateListeningIndicator } from './listening-indicator';
 import { SpeechRecognizerImpl } from './speech-recognizer';
 import type { ScoreState, AppAction, SpeechRecognizerError } from './types';
 
-let state: ScoreState = { ...initialState };
+let state: ScoreState = loadState();
 let feedbackTimer: ReturnType<typeof setTimeout> | null = null;
 
 const scoreboardEl = document.getElementById('scoreboard') as HTMLElement;
@@ -20,6 +20,7 @@ const errorEl = document.getElementById('error-message') as HTMLElement;
 
 function dispatch(action: AppAction): void {
   state = reduce(state, action);
+  saveState(state);
   render();
 }
 
