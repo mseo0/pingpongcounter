@@ -58,14 +58,14 @@ export class SpeechRecognizerImpl {
     };
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
-      for (let i = 0; i < event.results.length; i++) {
-        const result = event.results[i];
-        if (result.isFinal) {
-          const transcript = result[0].transcript.trim();
-          if (transcript) {
-            this.onTranscript(transcript);
-          }
-        }
+      const latestResult = event.results[event.results.length - 1];
+      if (!latestResult?.isFinal) {
+        return;
+      }
+
+      const transcript = latestResult[0].transcript.trim();
+      if (transcript) {
+        this.onTranscript(transcript);
       }
     };
 

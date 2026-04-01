@@ -3,15 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Voice Counter</title>
+    <title>Ping Pong Counter</title>
   </head>
   <body>
-    <h1>Voice Counter</h1>
-    <div id="error-message" role="alert" aria-live="polite"></div>
-    <div id="listening-indicator" class="listening-inactive" aria-label="Not listening"></div>
-    <button id="mic-toggle" type="button">Start Listening</button>
-    <div id="scoreboard"></div>
-    <div id="feedback" aria-live="polite"></div>
+    <main class="app-shell">
+      <section class="control-panel" aria-label="Voice controls">
+        <div class="listening-status">
+          <div id="listening-indicator" class="listening-inactive" aria-label="Not listening"></div>
+          <div>
+            <p class="status-label">Microphone</p>
+            <p class="status-value" id="listening-status-text">Not listening</p>
+          </div>
+        </div>
+
+        <button id="mic-toggle" class="primary-button" type="button">Start Listening</button>
+      </section>
+
+      <div id="error-message" class="message error-message" role="alert" aria-live="polite"></div>
+      <div id="scoreboard" class="scoreboard-grid"></div>
+      <div id="feedback" class="message feedback-message" aria-live="polite"></div>
+    </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 // Feature: voice-counter-website, Speech_Recognizer error handling unit tests
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { SpeechRecognizerImpl } from '../speech-recognizer';
 import type { SpeechRecognizerError } from '../types';
 
@@ -22,6 +22,14 @@ class MockSpeechRecognition {
   stop() {
     // no-op
   }
+}
+
+function createResult(transcript: string, isFinal: boolean) {
+  return {
+    0: { transcript },
+    isFinal,
+    length: 1,
+  };
 }
 
 describe('SpeechRecognizerImpl error handling', () => {
@@ -119,5 +127,38 @@ describe('SpeechRecognizerImpl error handling', () => {
       expect(errors).toHaveLength(1);
       expect(errors[0]).toEqual({ kind: 'runtime-error', message: errorMessage });
     });
+  });
+});
+
+describe('SpeechRecognizerImpl transcript handling', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('emits only the newest final transcript from a recognition event', () => {
+    let instance: MockSpeechRecognition | null = null;
+
+    const MockConstructor = vi.fn().mockImplementation(() => {
+      instance = new MockSpeechRecognition();
+      return instance;
+    });
+
+    vi.stubGlobal('SpeechRecognition', MockConstructor);
+
+    const recognizer = new SpeechRecognizerImpl();
+    const transcripts: string[] = [];
+    recognizer.onTranscript = (text) => transcripts.push(text);
+
+    recognizer.start();
+
+    instance!.onresult?.({
+      results: {
+        0: createResult('blue side', true),
+        1: createResult('red side', true),
+        length: 2,
+      } as unknown as SpeechRecognitionResultList,
+    } as unknown as Event);
+
+    expect(transcripts).toEqual(['red side']);
   });
 });

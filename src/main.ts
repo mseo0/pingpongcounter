@@ -1,3 +1,4 @@
+import './styles.css';
 import { initialState } from './state';
 import { reduce } from './store';
 import { parseCommand } from './parser';
@@ -13,6 +14,7 @@ let feedbackTimer: ReturnType<typeof setTimeout> | null = null;
 const scoreboardEl = document.getElementById('scoreboard') as HTMLElement;
 const feedbackEl = document.getElementById('feedback') as HTMLElement;
 const indicatorEl = document.getElementById('listening-indicator') as HTMLElement;
+const indicatorTextEl = document.getElementById('listening-status-text') as HTMLElement;
 const micToggleBtn = document.getElementById('mic-toggle') as HTMLButtonElement;
 const errorEl = document.getElementById('error-message') as HTMLElement;
 
@@ -26,6 +28,7 @@ function render(): void {
   renderFeedback(feedbackEl, state.feedback);
   updateListeningIndicator(indicatorEl, state.listening);
   micToggleBtn.textContent = state.listening ? 'Stop Listening' : 'Start Listening';
+  indicatorTextEl.textContent = state.listening ? 'Listening now' : 'Not listening';
 }
 
 const recognizer = new SpeechRecognizerImpl();
@@ -68,6 +71,7 @@ recognizer.onStateChange = (listening: boolean) => {
   state = { ...state, listening };
   updateListeningIndicator(indicatorEl, listening);
   micToggleBtn.textContent = listening ? 'Stop Listening' : 'Start Listening';
+  indicatorTextEl.textContent = listening ? 'Listening now' : 'Not listening';
 };
 
 recognizer.onError = (error: SpeechRecognizerError) => {
@@ -83,6 +87,7 @@ recognizer.onError = (error: SpeechRecognizerError) => {
   state = { ...state, listening: false };
   updateListeningIndicator(indicatorEl, false);
   micToggleBtn.textContent = 'Start Listening';
+  indicatorTextEl.textContent = 'Not listening';
 };
 
 micToggleBtn.addEventListener('click', () => {
