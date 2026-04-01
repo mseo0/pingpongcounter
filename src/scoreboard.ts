@@ -38,6 +38,7 @@ export function renderScoreboard(
     nameInput.setAttribute('value', sideName);
     nameInput.dataset.side = side;
     nameInput.setAttribute('aria-label', `${side} side name`);
+    nameInput.setAttribute('placeholder', side === 'left' ? 'Side One' : 'Side Two');
     nameInput.addEventListener('input', () => {
       dispatch({ type: 'SET_NAME', target: side, name: nameInput.value });
     });
