@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/voice-counter-website/',
+  base: '/',
+  plugins: [],
   test: {
     environment: 'jsdom',
   },
