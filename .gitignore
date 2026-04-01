@@ -1,0 +1,17 @@
+.vscode/settings.json
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+
+# Vite
+.vite/
