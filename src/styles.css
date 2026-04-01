@@ -167,9 +167,12 @@ input {
   display: grid;
   place-items: center;
   min-height: 100%;
-  font-size: clamp(7rem, 24vw, 18rem);
+  width: min(100%, 3.4ch);
+  margin: 0 auto;
+  font-size: clamp(6rem, 19vw, 14rem);
   font-weight: 900;
   line-height: 0.82;
+  font-variant-numeric: tabular-nums lining-nums;
   color: #ffffff;
   text-align: center;
   text-shadow: 0 10px 35px rgba(0, 0, 0, 0.18);
@@ -226,6 +229,7 @@ input {
   }
 
   .score-value {
-    font-size: clamp(6rem, 30vw, 12rem);
+    width: min(100%, 3.2ch);
+    font-size: clamp(5.5rem, 28vw, 10rem);
   }
 }
