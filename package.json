@@ -6,16 +6,19 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
     "test": "vitest --run",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "deploy": "npm run build && wrangler deploy"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.31.0",
+    "@vitest/ui": "^3.0.0",
+    "fast-check": "^3.15.0",
+    "jsdom": "^23.0.0",
     "typescript": "^5.2.2",
     "vite": "^6.0.0",
-    "fast-check": "^3.15.0",
     "vitest": "^3.0.0",
-    "@vitest/ui": "^3.0.0",
-    "jsdom": "^23.0.0"
+    "wrangler": "^4.80.0"
   }
 }
