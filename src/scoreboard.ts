@@ -84,7 +84,7 @@ export function renderScoreboard(
     resetBtn.className = 'reset-button';
     resetBtn.dataset.action = 'reset';
     resetBtn.dataset.side = side;
-    resetBtn.textContent = 'Reset';
+    resetBtn.textContent = 'Clear';
     resetBtn.type = 'button';
     resetBtn.addEventListener('click', () => {
       dispatch({ type: 'RESET', target: side });

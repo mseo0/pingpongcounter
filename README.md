@@ -20,7 +20,7 @@ A voice-activated scoreboard for two-sided competitions — ping pong, debates, 
 |---|---|
 | Increment | Just say the side name — e.g. "Red" or "Blue" |
 | Reset one side | "reset Red" / "clear Blue" / "zero Red" |
-| Reset all | "reset all" / "clear both" |
+| Reset all | "reset all" / "clear both" / "zero all" |
 
 Side names are set by you — whatever you name each side becomes the voice trigger.
 
