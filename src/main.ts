@@ -10,6 +10,28 @@ import type { ScoreState, AppAction, SpeechRecognizerError } from './types';
 
 let state: ScoreState = loadState();
 let feedbackTimer: ReturnType<typeof setTimeout> | null = null;
+let wakeLock: WakeLockSentinel | null = null;
+
+async function acquireWakeLock(): Promise<void> {
+  if (!('wakeLock' in navigator)) return;
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+  } catch {
+    // wake lock not available — silently ignore
+  }
+}
+
+function releaseWakeLock(): void {
+  wakeLock?.release();
+  wakeLock = null;
+}
+
+// Re-acquire wake lock if page becomes visible again (iOS releases it on tab switch)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && state.listening) {
+    acquireWakeLock();
+  }
+});
 
 const scoreboardEl = document.getElementById('scoreboard') as HTMLElement;
 const feedbackEl = document.getElementById('feedback') as HTMLElement;
@@ -86,6 +108,7 @@ recognizer.onError = (error: SpeechRecognizerError) => {
   }
   errorEl.textContent = message;
   state = { ...state, listening: false };
+  releaseWakeLock();
   updateListeningIndicator(indicatorEl, false);
   micToggleBtn.textContent = 'Start Listening';
   indicatorTextEl.textContent = 'Not listening';
@@ -94,9 +117,11 @@ recognizer.onError = (error: SpeechRecognizerError) => {
 micToggleBtn.addEventListener('click', () => {
   if (state.listening) {
     recognizer.stop();
+    releaseWakeLock();
   } else {
     errorEl.textContent = '';
     recognizer.start();
+    acquireWakeLock();
   }
 });
 
